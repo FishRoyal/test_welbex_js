@@ -2,6 +2,7 @@ const inputEl = document.querySelector('input');
 const buttonEl = document.querySelector('button');
 const timerEl = document.querySelector('span');
 
+const ONE_SECOND = 1000;
 
 const formatToTwoSymbols = (value) => {
     const valStr = value.toString()
@@ -15,21 +16,26 @@ const formatTime = (seconds) => {
     const m = formatToTwoSymbols(Math.floor((seconds - h * 3600) / 60));
     const s = formatToTwoSymbols(Math.floor(seconds - h * 3600 - m * 60));
 
-    return `${h}:${m}:${s}}`
+    return `${h}:${m}:${s}`
 }
 
-// Напишите реализацию createTimerAnimator
-// который будет анимировать timerEl
 const createTimerAnimator = () => {
   return (seconds) => {
-
+    timerEl.innerText = formatTime(seconds);
+    const interval = setInterval(() => {
+        seconds--;
+        if(seconds <= 0) {
+            clearInterval(interval);
+        }
+        timerEl.innerText = formatTime(seconds);
+    }, ONE_SECOND)
   };
 };
 
 const animateTimer = createTimerAnimator();
 
 inputEl.addEventListener('input', (e) => {
-  inputEl.innerText = e.target.value.replace(/\D/g, "")
+  inputEl.value = e.target.value.replace(/\D/g, "")
 });
 
 buttonEl.addEventListener('click', () => {
