@@ -6,7 +6,7 @@ const timerEl = document.querySelector('span');
 const formatToTwoSymbols = (value) => {
     const valStr = value.toString()
     if(valStr.length === 1) return `0${value}`;
-    
+
     return valStr;
 }
 
@@ -28,9 +28,8 @@ const createTimerAnimator = () => {
 
 const animateTimer = createTimerAnimator();
 
-inputEl.addEventListener('input', () => {
-  // Очистите input так, чтобы в значении
-  // оставались только числа
+inputEl.addEventListener('input', (e) => {
+  inputEl.innerText = e.target.value.replace(/\D/g, "")
 });
 
 buttonEl.addEventListener('click', () => {
